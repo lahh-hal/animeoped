@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Anime OP/ED List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      h1, h2 {
+        text-align: center;
+      }
+
+      .anime-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .anime-list p {
+        margin: 10px 0;
+      }
+
+      .anime-list a {
+        color: blue;
+      }
+    </style>
+    <script>
+      fetch("https://api.jikan.moe/v3/anime/1")
+        .then(response => response.json())
+        .then(data => {
+          const anime = data;
+          const animeList = document.getElementById("anime-list");
+          animeList.innerHTML = `
+            <h2>${anime.title}</h2>
+            <p>OP: <a href="${anime.opening_themes[0].url}">${anime.opening_themes[0].title}</a></p>
+            <p>ED: <a href="${anime.ending_themes[0].url}">${anime.ending_themes[0].title}</a></p>
+            <p>Twitter: <a href="https://twitter.com/${anime.twitter_account}">${anime.twitter_account}</a></p>
+            <p>Website: <a href="${anime.official_site}">${anime.official_site}</a></p>
+            <p>Year: ${anime.aired.from}</p>
+          `;
+        });
+    </script>
+  </head>
+  <body>
+    <h1>Anime OP/ED List</h1>
+    <div id="anime-list" class="anime-list"></div>
+  </body>
+</html>
