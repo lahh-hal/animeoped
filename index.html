@@ -37,7 +37,7 @@
     <script>
       const submitButton = document.getElementById("submit-button");
       submitButton.addEventListener("click", () => {
-        const animeTitle = document.getElementById("anime-title").value;
+        const animeTitle = encodeURIComponent(document.getElementById("anime-title").value);
         fetch(`https://api.jikan.moe/v3/anime/${animeTitle}`)
           .then(response => response.json())
           .then(data => {
