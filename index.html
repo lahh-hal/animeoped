@@ -26,25 +26,34 @@
         color: blue;
       }
     </style>
-    <script>
-      fetch("https://api.jikan.moe/v3/anime/1")
-        .then(response => response.json())
-        .then(data => {
-          const anime = data;
-          const animeList = document.getElementById("anime-list");
-          animeList.innerHTML = `
-            <h2>${anime.title}</h2>
-            <p>OP: <a href="${anime.opening_themes[0].url}">${anime.opening_themes[0].title}</a></p>
-            <p>ED: <a href="${anime.ending_themes[0].url}">${anime.ending_themes[0].title}</a></p>
-            <p>Twitter: <a href="https://twitter.com/${anime.twitter_account}">${anime.twitter_account}</a></p>
-            <p>Website: <a href="${anime.official_site}">${anime.official_site}</a></p>
-            <p>Year: ${anime.aired.from}</p>
-          `;
-        });
-    </script>
   </head>
   <body>
     <h1>Anime OP/ED List</h1>
+    <div>
+      <input type="text" id="anime-title" placeholder="Enter anime title">
+      <button id="submit-button">Submit</button>
+    </div>
     <div id="anime-list" class="anime-list"></div>
+    <script>
+      const submitButton = document.getElementById("submit-button");
+      submitButton.addEventListener("click", () => {
+        const animeTitle = document.getElementById("anime-title").value;
+        fetch(`https://api.jikan.moe/v3/anime/${animeTitle}`)
+          .then(response => response.json())
+          .then(data => {
+            const anime = data;
+            const animeList = document.getElementById("anime-list");
+            animeList.innerHTML = `
+              <h2>${anime.title}</h2>
+              <p>OP: <a href="${anime.opening_themes[0].url}">${anime.opening_themes[0].title}</a></p>
+              <p>ED: <a href="${anime.ending_themes[0].url}">${anime.ending_themes[0].title}</a></p>
+              <p>Twitter: <a href="https://twitter.com/${anime.twitter_account}">${anime.twitter_account}</a></p>
+              <p>Website: <a href="${anime.official_site}">${anime.official_site}</a></p>
+              <p>Year: ${anime.aired.from}</p>
+            `;
+          });
+      });
+    </script>
   </body>
 </html>
+
